@@ -1,0 +1,13 @@
+
+* Idéias
+
+*** importar arquivo xls com matrícula, CPF, nome, e-mail
+
+*** acrescentar colunas com cancelado (bool) e com moodle (bool) 
+
+*** atualizar DF a partir de novo xls com mesmas colunas q o primeiro. Marcar como cancelado quem foi excluído 
+
+*** importar arquivo xls com relatório de notas do moodle. Join por e-mail.
+
+*** diversos relatórios: quanto falta para vs, para passar direto
+
