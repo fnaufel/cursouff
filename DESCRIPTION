@@ -1,0 +1,14 @@
+Package: cursouff
+Title: Funções para gerenciar um curso de graduação da UFF
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Fernando",
+           family = "Naufel",
+           role = c("aut", "cre"),
+           email = "fnaufel@gmail.com")
+Description: Funções para gerenciar um curso de graduação da UFF.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
