@@ -1,0 +1,102 @@
+---
+title: "Scratch"
+author: "fnaufel"
+date: "5/7/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(magrittr)
+library(cursouff)
+```
+
+
+# Usando o pacote
+
+## Ler arquivo iduff
+
+```{r}
+alunos <- ler_alunos_iduff(
+  '/home/fnaufel/Documents/UFF/Ensino/Disciplinas/GA/2020.2/GA-01-30-todos.xls'
+)
+```
+
+```{r}
+dplyr::glimpse(alunos)
+```
+
+## Atualizando arquivo
+
+
+
+
+# Scratch
+
+## Atualizar alunos iduff
+
+```{r}
+atualizar_alunos_iduff <- function(df, arquivo) {
+  
+  
+  
+}
+```
+
+```{r}
+  '/home/fnaufel/Documents/UFF/Ensino/Disciplinas/GA/2020.2/GA-03-31.xls'
+
+```
+
+
+
+
+## Ler alunos xls do iduff
+
+```{r}
+ler_alunos_iduff <- function(arquivo) {
+  
+  info <- readxl::read_excel(
+    arquivo,
+    col_names = c('item', 'vazio', 'valor'),
+    skip = 1,
+    n_max = 4
+  ) %>% 
+    dplyr::select(item, valor) %>% 
+    dplyr::mutate(item = stringr::str_trim(item))
+  
+  alunos <- readxl::read_excel(
+    arquivo,
+    skip = 6
+  ) %>% 
+    dplyr::rename(nome = 'Nome do Aluno') %>% 
+    janitor::clean_names() %>% 
+    dplyr::rename(email = e_mail) %>% 
+    dplyr::mutate(
+      disciplina = info %>% dplyr::filter(item == 'Disciplina') %>% 
+        dplyr::pull(valor),
+      codigo     = info %>% dplyr::filter(item == 'Código') %>% 
+        dplyr::pull(valor),
+      turma      = info %>% dplyr::filter(item == 'Turma') %>% 
+        dplyr::pull(valor),
+      ano        = info %>% dplyr::filter(item == 'Período') %>% 
+        dplyr::pull(valor) %>% stringr::str_sub(end = -2) %>% as.integer(),
+      semestre   = info %>% dplyr::filter(item == 'Período') %>% 
+        dplyr::pull(valor) %>% stringr::str_sub(start = -2) %>% as.integer()
+    )
+  
+  alunos
+  
+}
+```
+
+
+```{r}
+alunos <- ler_alunos_iduff('/home/fnaufel/Documents/UFF/Ensino/Disciplinas/GA/2020.2/GA-03-31.xls')
+```
+
+```{r}
+dplyr::glimpse(alunos)
+```
+
