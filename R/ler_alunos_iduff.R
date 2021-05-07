@@ -20,6 +20,7 @@
 ##'   * `nome`
 ##'   * `email`
 ##'   * `ativo`: todas as linhas contendo TRUE
+##'   * `moodle`: todas as linhas contendo FALSE
 ##'
 ##' @author Fernando Naufel
 ##' @export

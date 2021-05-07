@@ -2,12 +2,17 @@
 title: "Scratch"
 author: "fnaufel"
 date: "5/7/2021"
-output: html_document
+output: 
+  html_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    df_print: paged
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(tidyverse)
+# library(tidyverse)
 library(magrittr)
 library(cursouff)
 ```
@@ -42,7 +47,7 @@ atual
 alunos <- atual[[1]]
 
 alunos %>% 
-  filter(!ativo)
+  dplyr::filter(!ativo)
 ```
 
 ```{r}
@@ -55,89 +60,29 @@ atual[[3]]
 atual[[2]]
 ```
 
+## Ler alunos do Moodle
+
+```{r}
+alunos_moodle <- ler_alunos_moodle('/home/fnaufel/Downloads/RCN00023_2020_2_Fernando Grades (1).xlsx')
+
+alunos_moodle
+```
+
+```{r}
+dplyr::glimpse(alunos_moodle)
+```
+
+
+
+
+
+
+<div style='height: 1000px'></div>
 
 # Scratch
 
-## Atualizar alunos iduff
-
-```{r}
-atualizar_alunos_iduff <- function(df_antes, arquivo) {
-  
-  df_depois <- ler_alunos_iduff(arquivo)
-  
-  df_incluidos <- df_depois %>% 
-    dplyr::anti_join(df_antes, by = 'matricula')
-  
-  df_excluidos <- df_antes %>% 
-    dplyr::anti_join(df_depois, by = 'matricula') %>% 
-    dplyr::mutate(ativo = FALSE)
-  
-  df <- df_antes %>% 
-    dplyr::rows_insert(df_incluidos, by = 'matricula') %>% 
-    dplyr::rows_update(df_excluidos, by = 'matricula')
-  
-  list(
-    atual = df,
-    incluidos = df_incluidos,
-    desativados = df_excluidos
-  )
-  
-}
-```
-
-```{r}
-alunos %>% 
-  atualizar_alunos_iduff('/home/fnaufel/Documents/UFF/Ensino/Disciplinas/GA/2020.2/GA-03-31.xls')
-```
 
 
 
 
-## Ler alunos xls do iduff
-
-```{r}
-ler_alunos_iduff <- function(arquivo) {
-  
-  info <- readxl::read_excel(
-    arquivo,
-    col_names = c('item', 'vazio', 'valor'),
-    skip = 1,
-    n_max = 4
-  ) %>% 
-    dplyr::select(item, valor) %>% 
-    dplyr::mutate(item = stringr::str_trim(item))
-  
-  alunos <- readxl::read_excel(
-    arquivo,
-    skip = 6
-  ) %>% 
-    dplyr::rename(nome = 'Nome do Aluno') %>% 
-    janitor::clean_names() %>% 
-    dplyr::rename(email = e_mail) %>% 
-    dplyr::mutate(
-      disciplina = info %>% dplyr::filter(item == 'Disciplina') %>% 
-        dplyr::pull(valor),
-      codigo     = info %>% dplyr::filter(item == 'Código') %>% 
-        dplyr::pull(valor),
-      turma      = info %>% dplyr::filter(item == 'Turma') %>% 
-        dplyr::pull(valor),
-      ano        = info %>% dplyr::filter(item == 'Período') %>% 
-        dplyr::pull(valor) %>% stringr::str_sub(end = -2) %>% as.integer(),
-      semestre   = info %>% dplyr::filter(item == 'Período') %>% 
-        dplyr::pull(valor) %>% stringr::str_sub(start = -2) %>% as.integer()
-    )
-  
-  alunos
-  
-}
-```
-
-
-```{r}
-alunos <- ler_alunos_iduff('/home/fnaufel/Documents/UFF/Ensino/Disciplinas/GA/2020.2/GA-03-31.xls')
-```
-
-```{r}
-dplyr::glimpse(alunos)
-```
-
+<div style='height: 1000px'></div>

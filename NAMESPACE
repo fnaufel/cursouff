@@ -3,4 +3,5 @@
 export("%>%")
 export(atualizar_alunos_iduff)
 export(ler_alunos_iduff)
+export(ler_alunos_moodle)
 importFrom(magrittr,"%>%")

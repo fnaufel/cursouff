@@ -21,6 +21,7 @@ tibble com as colunas
 \item \code{nome}
 \item \code{email}
 \item \code{ativo}: todas as linhas contendo TRUE
+\item \code{moodle}: todas as linhas contendo FALSE
 }
 }
 \description{
