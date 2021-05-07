@@ -29,7 +29,31 @@ dplyr::glimpse(alunos)
 
 ## Atualizando arquivo
 
+```{r}
+atual <- alunos %>% 
+  atualizar_alunos_iduff('/home/fnaufel/Documents/UFF/Ensino/Disciplinas/GA/2020.2/GA-03-31.xls')
+```
 
+```{r}
+atual
+```
+
+```{r}
+alunos <- atual[[1]]
+
+alunos %>% 
+  filter(!ativo)
+```
+
+```{r}
+# Desativados:
+atual[[3]]
+```
+
+```{r}
+# Incluídos:
+atual[[2]]
+```
 
 
 # Scratch
@@ -37,16 +61,33 @@ dplyr::glimpse(alunos)
 ## Atualizar alunos iduff
 
 ```{r}
-atualizar_alunos_iduff <- function(df, arquivo) {
+atualizar_alunos_iduff <- function(df_antes, arquivo) {
   
+  df_depois <- ler_alunos_iduff(arquivo)
   
+  df_incluidos <- df_depois %>% 
+    dplyr::anti_join(df_antes, by = 'matricula')
+  
+  df_excluidos <- df_antes %>% 
+    dplyr::anti_join(df_depois, by = 'matricula') %>% 
+    dplyr::mutate(ativo = FALSE)
+  
+  df <- df_antes %>% 
+    dplyr::rows_insert(df_incluidos, by = 'matricula') %>% 
+    dplyr::rows_update(df_excluidos, by = 'matricula')
+  
+  list(
+    atual = df,
+    incluidos = df_incluidos,
+    desativados = df_excluidos
+  )
   
 }
 ```
 
 ```{r}
-  '/home/fnaufel/Documents/UFF/Ensino/Disciplinas/GA/2020.2/GA-03-31.xls'
-
+alunos %>% 
+  atualizar_alunos_iduff('/home/fnaufel/Documents/UFF/Ensino/Disciplinas/GA/2020.2/GA-03-31.xls')
 ```
 
 
