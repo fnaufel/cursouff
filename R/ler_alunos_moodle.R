@@ -35,7 +35,8 @@ ler_alunos_moodle <- function(arquivo) {
       dplyr::across(!c(email_address, moodle_id, nome), as.numeric)
     ) %>%
     dplyr::rename_with(remover_sufixos) %>%
-    dplyr::select(email_address, moodle_id, nome, dplyr::everything())
+    dplyr::select(email_address, moodle_id, nome, dplyr::everything()) %>%
+    dplyr::arrange(nome)
 
   alunos_moodle
 

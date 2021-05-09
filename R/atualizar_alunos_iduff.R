@@ -22,15 +22,18 @@ atualizar_alunos_iduff <- function(df_antes, arquivo) {
   df_depois <- ler_alunos_iduff(arquivo)
 
   df_incluidos <- df_depois %>%
-    dplyr::anti_join(df_antes, by = 'matricula')
+    dplyr::anti_join(df_antes, by = 'matricula') %>%
+    dplyr::arrange(nome)
 
   df_excluidos <- df_antes %>%
     dplyr::anti_join(df_depois, by = 'matricula') %>%
-    dplyr::mutate(ativo = FALSE)
+    dplyr::mutate(ativo = FALSE) %>%
+    dplyr::arrange(nome)
 
   df <- df_antes %>%
     dplyr::rows_insert(df_incluidos, by = 'matricula') %>%
-    dplyr::rows_update(df_excluidos, by = 'matricula')
+    dplyr::rows_update(df_excluidos, by = 'matricula') %>%
+    dplyr::arrange(nome)
 
   list(
     atual = df,

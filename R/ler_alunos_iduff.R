@@ -54,7 +54,8 @@ ler_alunos_iduff <- function(arquivo) {
       semestre   = info %>% dplyr::filter(item == 'Período') %>%
         dplyr::pull(valor) %>% stringr::str_sub(start = -2) %>% as.integer(),
       ativo = TRUE
-    )
+    ) %>%
+    dplyr::arrange(nome)
 
   alunos
 
