@@ -1,4 +1,27 @@
 
+* Tasks
+
+*** Mudar ler_iduff e atualizar_iduff
+
+    + Eliminar coluna ativo.
+
+    + Quando atualizar, eliminar alunos excluídos
+
+*** Decidir como atualizar com arquivo moodle
+
+    + Sempre dar preferência ao email do iduff.
+
+    + Se a tibble já tiver moodle_id, ok. Usar como chave para o join.
+
+      - Neste caso, ignorar nome do moodle.
+
+    + Senão, usar nome ou email como chave para o join?
+
+      - Nenhum dos dois é confiável. Parece que os alunos mudam seus
+        emails no moodle. E parece que a CEAD digita nomes manualmente
+        no caso de inclusões avulsas, o que causa diferença com os
+        nomes do iduff.
+
 * Idéias
 
 *** diversos relatórios: quanto falta para vs, para passar direto

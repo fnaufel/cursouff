@@ -2,6 +2,6 @@
 
 export("%>%")
 export(atualizar_iduff)
+export(atualizar_moodle)
 export(ler_iduff)
-export(ler_moodle)
 importFrom(magrittr,"%>%")

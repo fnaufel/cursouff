@@ -16,7 +16,6 @@
 ##'   * `total`: conteúdo de `course_total`, no Moodle
 ##'
 ##' @author Fernando Naufel
-##' @export
 ler_moodle <- function(arquivo) {
 
   alunos_moodle <- readxl::read_excel(
@@ -47,8 +46,8 @@ ler_moodle <- function(arquivo) {
 remover_sufixos <- function(nome) {
 
   nome %>%
-    stringr::str_remove('^assignment_') %>%
-    stringr::str_remove('^course_') %>%
+    stringr::str_replace('^assignment_', 'nota_') %>%
+    stringr::str_replace('^course_total', 'nota_final') %>%
     stringr::str_remove('_real$')
 
 }
