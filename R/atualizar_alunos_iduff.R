@@ -40,3 +40,4 @@ atualizar_alunos_iduff <- function(df_antes, arquivo) {
 
 }
 
+# TODO: se o df passado não tiver dados do iduff, fazer join por email

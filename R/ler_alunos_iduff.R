@@ -11,16 +11,16 @@
 ##' @param arquivo Nome do arquivo .xls
 ##'
 ##' @return tibble com as colunas
-##'   * `disciplina`
-##'   * `código`
-##'   * `turma`
-##'   * `período`
-##'   * `matrícula`
+##'   * `matricula`
 ##'   * `cpf`
 ##'   * `nome`
 ##'   * `email`
+##'   * `disciplina`
+##'   * `codigo`
+##'   * `turma`
+##'   * `ano`
+##'   * `semestre`
 ##'   * `ativo`: todas as linhas contendo TRUE
-##'   * `moodle`: todas as linhas contendo FALSE
 ##'
 ##' @author Fernando Naufel
 ##' @export

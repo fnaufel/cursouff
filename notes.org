@@ -1,9 +1,29 @@
 
 * Idéias
 
-*** acrescentar colunas com cancelado (bool) e com moodle (bool) 
-
-*** importar arquivo xls com relatório de notas do moodle. Join por e-mail.
-
 *** diversos relatórios: quanto falta para vs, para passar direto
 
+* Colunas
+
+*** Lido do iduff
+
+    + matricula
+    + cpf
+    + nome
+    + email
+    + disciplina
+    + codigo
+    + turma
+    + ano
+    + semestre
+    + ativo
+
+*** Lido do Moodle
+
+    + email_address
+    + moodle_id
+    + nome
+    + lista_1_avaliativa
+    + video_explicando_uma_questao_da_lista_1
+    + lista_2_conicas
+    + total
