@@ -7,7 +7,7 @@
 ##'
 ##' Note também que função retorna uma lista com 3 tibbles: a turma atual, os alunos novos, e os alunos excluídos.
 ##'
-##' @param df_antes tibble com a turma original
+##' @param df_antes tibble com a turma original (com campos do iduff, pelo menos)
 ##' @param arquivo Nome do arquivo .xls com a turma atual
 ##'
 ##' @return Lista com 3 tibbles:
@@ -21,18 +21,26 @@ atualizar_alunos_iduff <- function(df_antes, arquivo) {
 
   df_depois <- ler_alunos_iduff(arquivo)
 
+  # Joins feitos por matricula
+  coluna <- 'matricula'
+
   df_incluidos <- df_depois %>%
-    dplyr::anti_join(df_antes, by = 'matricula') %>%
+    # Linhas de depois que não estão em antes
+    dplyr::anti_join(df_antes, by = coluna) %>%
     dplyr::arrange(nome)
 
   df_excluidos <- df_antes %>%
-    dplyr::anti_join(df_depois, by = 'matricula') %>%
+    # Linhas de antes que não estão em depois
+    dplyr::anti_join(df_depois, by = coluna) %>%
+    # Marcar todos como inativos
     dplyr::mutate(ativo = FALSE) %>%
     dplyr::arrange(nome)
 
   df <- df_antes %>%
-    dplyr::rows_insert(df_incluidos, by = 'matricula') %>%
-    dplyr::rows_update(df_excluidos, by = 'matricula') %>%
+    # Inserir linhas novas
+    dplyr::rows_insert(df_incluidos, by = coluna) %>%
+    # Marcar alunos excluídos como inativos
+    dplyr::rows_update(df_excluidos, by = coluna) %>%
     dplyr::arrange(nome)
 
   list(
@@ -43,4 +51,3 @@ atualizar_alunos_iduff <- function(df_antes, arquivo) {
 
 }
 
-# TODO: se o df passado não tiver dados do iduff, fazer join por email

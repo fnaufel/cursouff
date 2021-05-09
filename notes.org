@@ -20,7 +20,7 @@
 
 *** Lido do Moodle
 
-    + email_address
+    + email
     + moodle_id
     + nome
     + lista_1_avaliativa

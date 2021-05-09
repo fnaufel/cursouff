@@ -28,14 +28,15 @@ ler_alunos_moodle <- function(arquivo) {
       nome = stringr::str_to_upper(paste(first_name, surname)),
       .keep = 'unused'
     ) %>%
+    dplyr::rename(email = email_address) %>%
     dplyr::select(
       !c(id_number, institution, department, last_downloaded_from_this_course)
     ) %>%
     dplyr::mutate(
-      dplyr::across(!c(email_address, moodle_id, nome), as.numeric)
+      dplyr::across(!c(email, moodle_id, nome), as.numeric)
     ) %>%
     dplyr::rename_with(remover_sufixos) %>%
-    dplyr::select(email_address, moodle_id, nome, dplyr::everything()) %>%
+    dplyr::select(email, moodle_id, nome, dplyr::everything()) %>%
     dplyr::arrange(nome)
 
   alunos_moodle
