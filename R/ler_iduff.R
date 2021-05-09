@@ -24,7 +24,7 @@
 ##'
 ##' @author Fernando Naufel
 ##' @export
-ler_alunos_iduff <- function(arquivo) {
+ler_iduff <- function(arquivo) {
 
   info <- readxl::read_excel(
     arquivo,

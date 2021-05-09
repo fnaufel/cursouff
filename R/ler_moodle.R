@@ -17,7 +17,7 @@
 ##'
 ##' @author Fernando Naufel
 ##' @export
-ler_alunos_moodle <- function(arquivo) {
+ler_moodle <- function(arquivo) {
 
   alunos_moodle <- readxl::read_excel(
     arquivo

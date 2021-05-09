@@ -17,12 +17,12 @@
 ##'
 ##' @author Fernando Naufel
 ##' @export
-atualizar_alunos_iduff <- function(df_antes, arquivo) {
+atualizar_iduff <- function(df_antes, arquivo) {
 
   if (! 'matricula' %in% names(df_antes))
     stop('Tibble deve ter campo matricula!')
 
-  df_depois <- ler_alunos_iduff(arquivo)
+  df_depois <- ler_iduff(arquivo)
 
   # Joins feitos por matricula
   coluna <- 'matricula'
