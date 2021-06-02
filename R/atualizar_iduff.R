@@ -1,22 +1,22 @@
-##' Atualiza tibble de alunos a partir de novo arquivo .xls do iduff
-##'
-##' Inclui os alunos do novo arquivo que não estavam na tibble e
-##' marca como inativos os alunos que não aparecem no novo arquivo.
-##'
-##' Note que os alunos excluídos não são deletados da tibble, mas apenas marcados como inativos.
-##'
-##' Note também que função retorna uma lista com 3 tibbles: a turma atual, os alunos novos, e os alunos excluídos.
-##'
-##' @param df_antes tibble com a turma original (com campos do iduff, pelo menos)
-##' @param arquivo Nome do arquivo .xls com a turma atual
-##'
-##' @return Lista com 3 tibbles:
-##'   * turma atual (com alunos excluídos marcados como inativos)
-##'   * alunos novos
-##'   * alunos excluídos
-##'
-##' @author Fernando Naufel
-##' @export
+#' @title Atualiza tibble de alunos a partir de novo arquivo .xls do iduff
+#'
+#' @description Inclui os alunos do novo arquivo que não estavam na tibble e
+#' marca como inativos os alunos que não aparecem no novo arquivo.
+#'
+#' @details Note que os alunos excluídos não são deletados da tibble, mas apenas marcados como inativos.
+#'
+#' Note também que função retorna uma lista com 3 tibbles: a turma atual, os alunos novos, e os alunos excluídos.
+#'
+#' @param df_antes tibble com a turma original (com campos do iduff, pelo menos).
+#' @param arquivo Nome do arquivo .xls com a turma atual.
+#' @return Lista com 3 tibbles:
+#'   * turma atual (com alunos excluídos marcados como inativos)
+#'   * alunos novos
+#'   * alunos excluídos
+#'
+#' @author fnaufel
+#' @export
+#' @importFrom dplyr anti_join arrange mutate rows_insert rows_update
 atualizar_iduff <- function(df_antes, arquivo) {
 
   if (! 'matricula' %in% names(df_antes))

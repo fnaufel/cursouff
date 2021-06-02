@@ -2,19 +2,35 @@
 % Please edit documentation in R/atualizar_moodle.R
 \name{atualizar_moodle}
 \alias{atualizar_moodle}
-\title{.. content for \description{} (no empty lines) ..}
+\title{Atualiza tibble de alunos a partir de novo arquivo do Moodle}
 \usage{
 atualizar_moodle(df_antes, arquivo)
 }
 \arguments{
-\item{arquivo}{}
+\item{df_antes}{Tibble com dados dos alunos.}
+
+\item{arquivo}{Caminho do arquivo Excel exportado pelo Moodle via
+\verb{Grades > Export: Excel spreadsheet}.}
 }
 \value{
-
+Se não houve conflitos no join, retorna a tibble atualizada.
+Se houve conflitos, termina com erro.
 }
 \description{
-.. content for \details{} ..
+Deve ser chamada para incluir na tibble as notas que foram
+atribuídas dos alunos no Moodle.
+}
+\details{
+\itemize{
+\item Ignora o email do iduff em favor do email do Moodle. Isto porque os
+alunos costumam alterar seus emails no Moodle, enquanto o iduff costuma
+ter os emails de quando os alunos eram calouros.
+\item Se a tibble já tem o campo \code{moodle_id}, usa como chave do join.
+\item Senão, usa o campo \code{nome} como chave do join e emite aviso a respeito.
+Se houver aluno com nome em só uma das fontes (tibble ou arquivo Moodle),
+emite erro e cancela a operação.
+}
 }
 \author{
-Fernando Naufel
+fnaufel
 }

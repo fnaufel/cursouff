@@ -1,27 +1,38 @@
 
-* Tasks
+* [0/2] Tasks
 
-*** Mudar ler_iduff e atualizar_iduff
+*** TODO Mudar ler_iduff e atualizar_iduff
+    :LOGBOOK:
+    - State "TODO"       from              [2021-06-02 Wed 18:25]
+    :END:
 
     + Eliminar coluna ativo.
 
     + Quando atualizar, eliminar alunos excluídos
 
-*** Decidir como atualizar com arquivo moodle
+*** STARTED Decidir como atualizar com arquivo moodle
+    :LOGBOOK:
+    - State "STARTED"    from              [2021-06-02 Wed 18:25]
+    :END:
 
-    + Sempre dar preferência ao email do iduff.
+    + Sempre dar preferência ao email do moodle.
 
     + Se a tibble já tiver moodle_id, ok. Usar como chave para o join.
 
       - Neste caso, ignorar nome do moodle.
 
-    + Senão, usar nome ou email como chave para o join?
+    + Senão, usar nome como chave para o join.
 
-      - Nenhum dos dois é confiável. Parece que os alunos mudam seus
-        emails no moodle. E parece que a CEAD digita nomes manualmente
-        no caso de inclusões avulsas, o que causa diferença com os
-        nomes do iduff.
+      - Nenhum dos dois --- nome e email --- é 100% confiável.
 
+      - Parece que os alunos mudam seus emails no moodle.
+
+      - E parece que a CEAD digita nomes manualmente no caso de
+        inclusões avulsas, o que causa diferença com os nomes do
+        iduff.
+
+      - Então, se houver problemas no join, cancelar com erro.
+        
 * Idéias
 
 *** diversos relatórios: quanto falta para vs, para passar direto

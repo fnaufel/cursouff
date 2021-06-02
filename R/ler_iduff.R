@@ -1,29 +1,33 @@
-##' Lê arquivo .xls produzido pelo iduff
-##'
-##' Monta uma tibble com os dados da planilha.
-##'
-##' Conteúdo da planilha:
-##'
-##' * Linhas 1 a 6 têm `disciplina`, `código`, `turma` e `período`.
-##'
-##' * Linha 7 tem os cabeçalhos das colunas: `matrícula`, `cpf`, `nome`, `email`.
-##'
-##' @param arquivo Nome do arquivo .xls
-##'
-##' @return tibble com as colunas
-##'   * `matricula`
-##'   * `cpf`
-##'   * `nome`
-##'   * `email`
-##'   * `disciplina`
-##'   * `codigo`
-##'   * `turma`
-##'   * `ano`
-##'   * `semestre`
-##'   * `ativo`: todas as linhas contendo TRUE
-##'
-##' @author Fernando Naufel
-##' @export
+#' @title Lê arquivo .xls produzido pelo iduff
+#'
+#' @description Monta uma tibble com os dados da planilha.
+#'
+#' @details Conteúdo da planilha:
+#'
+#' * Linhas 1 a 6 têm `disciplina`, `código`, `turma` e `período`.
+#'
+#' * Linha 7 tem os cabeçalhos das colunas: `matrícula`, `cpf`, `nome`, `email`.
+#'
+#' @param arquivo Nome do arquivo .xls.
+#'
+#' @return tibble com as colunas
+#'   * `matricula`
+#'   * `cpf`
+#'   * `nome`
+#'   * `email`
+#'   * `disciplina`
+#'   * `codigo`
+#'   * `turma`
+#'   * `ano`
+#'   * `semestre`
+#'   * `ativo`: todas as linhas contendo TRUE
+#'
+#' @author fnaufel
+#' @importFrom readxl read_excel
+#' @importFrom dplyr select mutate rename filter pull arrange
+#' @importFrom stringr str_trim str_sub
+#' @importFrom janitor clean_names
+#' @export
 ler_iduff <- function(arquivo) {
 
   info <- readxl::read_excel(

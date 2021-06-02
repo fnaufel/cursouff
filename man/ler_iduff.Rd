@@ -7,7 +7,7 @@
 ler_iduff(arquivo)
 }
 \arguments{
-\item{arquivo}{Nome do arquivo .xls}
+\item{arquivo}{Nome do arquivo .xls.}
 }
 \value{
 tibble com as colunas
@@ -35,5 +35,5 @@ Conteúdo da planilha:
 }
 }
 \author{
-Fernando Naufel
+fnaufel
 }

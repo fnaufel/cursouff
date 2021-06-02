@@ -1,21 +1,23 @@
-##' Lê arquivo .xls produzido pelo Moodle
-##'
-##' Monta uma tibble com os dados da planilha.
-##'
-##' No Moodle, a planilha é obtida em `Grades > Export: Excel spreadsheet`.
-##' Se, em `Grade items to be included` você escolher incluir notas de atividades,
-##' estas notas também serão processadas por esta função.
-##'
-##' @param arquivo Nome do arquivo .xls(x)
-##'
-##' @return tibble com as colunas
-##'   * `email_address`
-##'   * `moodle_id` (string)
-##'   * `nome` (conteúdo todo em maiúsculas)
-##'   * Notas das atividades escolhidas em `Grade items to be included`, no Moodle
-##'   * `total`: conteúdo de `course_total`, no Moodle
-##'
-##' @author Fernando Naufel
+#' @title Lê arquivo .xls produzido pelo Moodle
+#'
+#' @description Monta uma tibble com os dados da planilha.
+#'
+#' @details No Moodle, a planilha é obtida em `Grades > Export: Excel spreadsheet`.
+#' Se, em `Grade items to be included`, você escolher incluir notas de atividades,
+#' estas notas também serão processadas por esta função.
+#'
+#' @param arquivo Nome do arquivo .xls(x).
+
+#' @return tibble com as colunas
+#'   * `email_address`
+#'   * `moodle_id` (string)
+#'   * `nome` (conteúdo todo em maiúsculas)
+#'   * Notas das atividades escolhidas em `Grade items to be included`, no Moodle.
+#'     Os nomes das notas são alterados pela função [mudar_nomes()].
+#'   * `nota_final`: conteúdo de `course_total`, no Moodle
+#'
+#' @author fnaufel
+#' @importFrom stringr str_replace str_remove
 ler_moodle <- function(arquivo) {
 
   alunos_moodle <- readxl::read_excel(
@@ -34,7 +36,7 @@ ler_moodle <- function(arquivo) {
     dplyr::mutate(
       dplyr::across(!c(email, moodle_id, nome), as.numeric)
     ) %>%
-    dplyr::rename_with(remover_sufixos) %>%
+    dplyr::rename_with(mudar_nomes) %>%
     dplyr::select(email, moodle_id, nome, dplyr::everything()) %>%
     dplyr::arrange(nome)
 
@@ -43,7 +45,16 @@ ler_moodle <- function(arquivo) {
 }
 
 
-remover_sufixos <- function(nome) {
+#' Mudar nomes das colunas onde o moodle põe as notas
+#'
+#' @param nome Nome da coluna (vetorizado).
+#'
+#' @return Nome(s) da(s) coluna(s) alterado(s).
+#'   * `assignment_` ➜ `nota_`
+#'   * `course_total` ➜ `nota_final`
+#'   * O sufixo `_real`, se estiver presente, é removido
+#'
+mudar_nomes <- function(nome) {
 
   nome %>%
     stringr::str_replace('^assignment_', 'nota_') %>%

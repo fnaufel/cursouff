@@ -7,9 +7,9 @@
 atualizar_iduff(df_antes, arquivo)
 }
 \arguments{
-\item{df_antes}{tibble com a turma original (com campos do iduff, pelo menos)}
+\item{df_antes}{tibble com a turma original (com campos do iduff, pelo menos).}
 
-\item{arquivo}{Nome do arquivo .xls com a turma atual}
+\item{arquivo}{Nome do arquivo .xls com a turma atual.}
 }
 \value{
 Lista com 3 tibbles:
@@ -29,5 +29,5 @@ Note que os alunos excluídos não são deletados da tibble, mas apenas marcados
 Note também que função retorna uma lista com 3 tibbles: a turma atual, os alunos novos, e os alunos excluídos.
 }
 \author{
-Fernando Naufel
+fnaufel
 }
