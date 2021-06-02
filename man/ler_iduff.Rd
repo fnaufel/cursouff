@@ -21,7 +21,6 @@ tibble com as colunas
 \item \code{turma}
 \item \code{ano}
 \item \code{semestre}
-\item \code{ativo}: todas as linhas contendo TRUE
 }
 }
 \description{

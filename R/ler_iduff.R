@@ -20,7 +20,6 @@
 #'   * `turma`
 #'   * `ano`
 #'   * `semestre`
-#'   * `ativo`: todas as linhas contendo TRUE
 #'
 #' @author fnaufel
 #' @importFrom readxl read_excel
@@ -56,8 +55,7 @@ ler_iduff <- function(arquivo) {
       ano        = info %>% dplyr::filter(item == 'Período') %>%
         dplyr::pull(valor) %>% stringr::str_sub(end = -2) %>% as.integer(),
       semestre   = info %>% dplyr::filter(item == 'Período') %>%
-        dplyr::pull(valor) %>% stringr::str_sub(start = -2) %>% as.integer(),
-      ativo = TRUE
+        dplyr::pull(valor) %>% stringr::str_sub(start = -2) %>% as.integer()
     ) %>%
     dplyr::arrange(nome)
 

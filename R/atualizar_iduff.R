@@ -1,22 +1,23 @@
 #' @title Atualiza tibble de alunos a partir de novo arquivo .xls do iduff
 #'
-#' @description Inclui os alunos do novo arquivo que não estavam na tibble e
-#' marca como inativos os alunos que não aparecem no novo arquivo.
+#' @description Inclui na tibble os alunos do novo arquivo que não estavam na
+#'   tibble e remove da tibble os alunos que não aparecem no novo arquivo.
 #'
-#' @details Note que os alunos excluídos não são deletados da tibble, mas apenas marcados como inativos.
+#' @details
 #'
-#' Note também que função retorna uma lista com 3 tibbles: a turma atual, os alunos novos, e os alunos excluídos.
+#' @param df_antes Tibble com a turma original (com campos do iduff, pelo
+#'   menos; talvez com os campos do moodle também).
 #'
-#' @param df_antes tibble com a turma original (com campos do iduff, pelo menos).
-#' @param arquivo Nome do arquivo .xls com a turma atual.
+#' @param arquivo Nome do arquivo .xls exportado pelo iduff.
+#'
 #' @return Lista com 3 tibbles:
-#'   * turma atual (com alunos excluídos marcados como inativos)
-#'   * alunos novos
-#'   * alunos excluídos
+#'   * `$atual`: tibble atualizada
+#'   * `$incluidos`: tibble com novos alunos
+#'   * `$excluidos`: tibble com alunos excluídos
 #'
 #' @author fnaufel
 #' @export
-#' @importFrom dplyr anti_join arrange mutate rows_insert rows_update
+#' @importFrom dplyr anti_join arrange mutate rows_insert rows_delete
 atualizar_iduff <- function(df_antes, arquivo) {
 
   if (! 'matricula' %in% names(df_antes))
@@ -24,7 +25,7 @@ atualizar_iduff <- function(df_antes, arquivo) {
 
   df_depois <- ler_iduff(arquivo)
 
-  # Joins feitos por matricula
+  # Os joins vão ser feitos por matricula
   coluna <- 'matricula'
 
   df_incluidos <- df_depois %>%
@@ -35,21 +36,20 @@ atualizar_iduff <- function(df_antes, arquivo) {
   df_excluidos <- df_antes %>%
     # Linhas de antes que não estão em depois
     dplyr::anti_join(df_depois, by = coluna) %>%
-    # Marcar todos como inativos
-    dplyr::mutate(ativo = FALSE) %>%
     dplyr::arrange(nome)
 
+  # Importante: alunos já presentes na tibble não têm nenhum campo alterado
   df <- df_antes %>%
     # Inserir linhas novas
     dplyr::rows_insert(df_incluidos, by = coluna) %>%
-    # Marcar alunos excluídos como inativos
-    dplyr::rows_update(df_excluidos, by = coluna) %>%
+    # Deletar alunos excluídos
+    dplyr::rows_delete(df_excluidos, by = coluna) %>%
     dplyr::arrange(nome)
 
   list(
     atual = df,
     incluidos = df_incluidos,
-    desativados = df_excluidos
+    excluidos = df_excluidos
   )
 
 }

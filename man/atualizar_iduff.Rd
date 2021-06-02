@@ -7,26 +7,25 @@
 atualizar_iduff(df_antes, arquivo)
 }
 \arguments{
-\item{df_antes}{tibble com a turma original (com campos do iduff, pelo menos).}
+\item{df_antes}{Tibble com a turma original (com campos do iduff, pelo
+menos; talvez com os campos do moodle também).}
 
-\item{arquivo}{Nome do arquivo .xls com a turma atual.}
+\item{arquivo}{Nome do arquivo .xls exportado pelo iduff.}
 }
 \value{
 Lista com 3 tibbles:
 \itemize{
-\item turma atual (com alunos excluídos marcados como inativos)
-\item alunos novos
-\item alunos excluídos
+\item \verb{$atual}: tibble atualizada
+\item \verb{$incluidos}: tibble com novos alunos
+\item \verb{$excluidos}: tibble com alunos excluídos
 }
 }
 \description{
-Inclui os alunos do novo arquivo que não estavam na tibble e
-marca como inativos os alunos que não aparecem no novo arquivo.
+Inclui na tibble os alunos do novo arquivo que não estavam na
+tibble e remove da tibble os alunos que não aparecem no novo arquivo.
 }
 \details{
-Note que os alunos excluídos não são deletados da tibble, mas apenas marcados como inativos.
 
-Note também que função retorna uma lista com 3 tibbles: a turma atual, os alunos novos, e os alunos excluídos.
 }
 \author{
 fnaufel
