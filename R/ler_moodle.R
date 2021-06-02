@@ -17,7 +17,10 @@
 #'   * `nota_final`: conteúdo de `course_total`, no Moodle
 #'
 #' @author fnaufel
-#' @importFrom stringr str_replace str_remove
+#' @importFrom readxl read_excel
+#' @importFrom janitor clean_names
+#' @importFrom dplyr mutate rename select across rename_with everything arrange
+#' @importFrom stringr str_to_upper
 ler_moodle <- function(arquivo) {
 
   alunos_moodle <- readxl::read_excel(
@@ -54,6 +57,7 @@ ler_moodle <- function(arquivo) {
 #'   * `course_total` ➜ `nota_final`
 #'   * O sufixo `_real`, se estiver presente, é removido
 #'
+#' @importFrom stringr str_replace str_remove
 mudar_nomes <- function(nome) {
 
   nome %>%
@@ -62,5 +66,3 @@ mudar_nomes <- function(nome) {
     stringr::str_remove('_real$')
 
 }
-
-

@@ -1,5 +1,5 @@
 
-* [0/2] Tasks
+* [1/2] Tasks
 
 *** TODO Mudar ler_iduff e atualizar_iduff
     :LOGBOOK:
@@ -10,8 +10,10 @@
 
     + Quando atualizar, eliminar alunos excluídos
 
-*** STARTED Decidir como atualizar com arquivo moodle
+*** DONE Decidir como atualizar com arquivo moodle
+    CLOSED: [2021-06-02 Wed 18:56]
     :LOGBOOK:
+    - State "DONE"       from "STARTED"    [2021-06-02 Wed 18:56]
     - State "STARTED"    from              [2021-06-02 Wed 18:25]
     :END:
 
@@ -36,6 +38,8 @@
 * Idéias
 
 *** diversos relatórios: quanto falta para vs, para passar direto
+
+* Workflow
 
 * Colunas
 
