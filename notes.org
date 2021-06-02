@@ -1,8 +1,10 @@
 
-* [1/2] Tasks
+* [2/2] Tasks
 
-*** TODO Mudar ler_iduff e atualizar_iduff
+*** DONE Mudar ler_iduff e atualizar_iduff
+    CLOSED: [2021-06-02 Wed 19:31]
     :LOGBOOK:
+    - State "DONE"       from "TODO"       [2021-06-02 Wed 19:31]
     - State "TODO"       from              [2021-06-02 Wed 18:25]
     :END:
 
@@ -38,6 +40,8 @@
 * Idéias
 
 *** diversos relatórios: quanto falta para vs, para passar direto
+
+* Tests
 
 * Workflow
 

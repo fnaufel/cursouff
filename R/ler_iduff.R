@@ -55,7 +55,7 @@ ler_iduff <- function(arquivo) {
       ano        = info %>% dplyr::filter(item == 'Período') %>%
         dplyr::pull(valor) %>% stringr::str_sub(end = -2) %>% as.integer(),
       semestre   = info %>% dplyr::filter(item == 'Período') %>%
-        dplyr::pull(valor) %>% stringr::str_sub(start = -2) %>% as.integer()
+        dplyr::pull(valor) %>% stringr::str_sub(start = -1) %>% as.integer()
     ) %>%
     dplyr::arrange(nome)
 
