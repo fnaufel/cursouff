@@ -38,12 +38,18 @@ atualizar_iduff <- function(df_antes, arquivo) {
     dplyr::anti_join(df_depois, by = coluna) %>%
     dplyr::arrange(nome)
 
+  # Se houver excluídos, deletar linhas de df_antes.
+  # O teste é necessário, pois parece que rows_delete dá problema
+  # com tibble vazia
+  if (nrow(df_excluidos) > 0) {
+    df_antes <- df_antes %>%
+    dplyr::rows_delete(df_excluidos, by = coluna)
+  }
+
   # Importante: alunos já presentes na tibble não têm nenhum campo alterado
   df <- df_antes %>%
     # Inserir linhas novas
     dplyr::rows_insert(df_incluidos, by = coluna) %>%
-    # Deletar alunos excluídos
-    dplyr::rows_delete(df_excluidos, by = coluna) %>%
     dplyr::arrange(nome)
 
   list(
