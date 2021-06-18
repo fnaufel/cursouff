@@ -14,69 +14,100 @@
 #'   * Ignora o email do iduff em favor do email do Moodle. Isto porque os
 #'     alunos costumam alterar seus emails no Moodle, enquanto o iduff costuma
 #'     ter os emails de quando os alunos eram calouros.
-#'   * Se a tibble já tem o campo `moodle_id`, usa como chave do join.
+#'   * Se a tibble já tem o campo `moodle_id`, usa este campo como chave do join
+#'      para os registros onde ele não é NA.
 #'   * Senão, usa o campo `nome` como chave do join e emite aviso a respeito.
 #'     Se houver aluno com nome em só uma das fontes (tibble ou arquivo Moodle),
 #'     emite erro e cancela a operação.
 #'
 #' @author fnaufel
 #' @export
-#' @importFrom dplyr select anti_join arrange left_join
+#' @importFrom dplyr left_join arrange filter select bind_rows pull rename
 atualizar_moodle <- function(df_antes, arquivo) {
 
-  df_depois <- ler_moodle(arquivo)
+  df_moodle <- ler_moodle(arquivo)
 
-  # Dar precedência a email do moodle:
-  df_antes <- df_antes %>% dplyr::select(-email)
+  tem_id <- 'moodle_id' %in% names(df_antes)
 
-  # Se a tibble já tem moodle_id, usar esta coluna para join.
-  # Além disso, usar nome da tibble
-  if ('moodle_id' %in% names(df_antes)) {
-    coluna <- 'moodle_id'
-    df_depois <- df_depois %>% dplyr::select(-nome)
+  # Não existe coluna moodle_id em df_antes
+  if (!tem_id) {
+
+    warning('Usando `nome` como chave. Pode haver conflitos.\n')
+    testar_join_por_nome(df_antes, df_moodle)
+
+    df_atual <- df_antes %>%
+      dplyr::left_join(df_moodle, by = 'nome') %>%
+      dplyr::arrange(nome)
+
   } else {
-    # Senão, tentar usar nome para join e emitir aviso.
-    # Se houver problema, cancelar e emitir erro.
-    coluna <- 'nome'
-    warning('Usando `nome` como identificador. Pode haver conflitos.')
+    # Existe a coluna `moodle_id` em df_antes
+    # Mas pode haver linhas em df_antes com NA em `moodle_id`
+    # (alunos já no iduff mas recém incluídos no moodle)
+    # Dividir df_antes: com moodle_id e sem moodle_id
+    df_antes_com_id <- df_antes %>%
+      dplyr::filter(!is.na(moodle_id))
 
-    # Nomes sobrando no moodle
-    df_incluidos <- df_depois %>%
-      dplyr::anti_join(df_antes, by = coluna) %>%
+    df_antes_sem_id <- df_antes %>%
+      dplyr::filter(is.na(moodle_id))
+
+    # Alunos com id: join por id
+    df_atual1 <- df_antes_com_id %>%
+      dplyr::left_join(
+        # Usar os nomes dos alunos da tibble antes, não do moodle
+        df_moodle %>% dplyr::select(-nome),
+        by = 'moodle_id'
+      )
+
+    # Alunos sem id: join por nome
+    warning(
+      'Usando `nome` como chave para alguns alunos. Pode haver conflitos.\n'
+    )
+    df_atual2 <- df_antes_sem_id %>%
+      # Tirar essa coluna de NAs para substituir pela coluna do moodle
+      dplyr::select(-moodle_id) %>%
+      dplyr::left_join(
+        df_moodle,
+        by = 'nome'
+      )
+
+    # Juntar tudo
+    df_atual <-
+      dplyr::bind_rows(df_atual1, df_atual2) %>%
       dplyr::arrange(nome)
 
-    # Nomes sobrando na tibble
-    df_excluidos <- df_antes %>%
-      dplyr::anti_join(df_depois, by = coluna) %>%
-      dplyr::arrange(nome)
+    # Todos têm moodle_id? Senão, erro
+    sem_id <- df_atual %>%
+      dplyr::filter(is.na(moodle_id))
+    if (nrow(sem_id) > 0) {
+      msg <- sem_id %>% dplyr::pull(nome) %>% paste0(collapse = '\n')
+      stop(
+        paste0(
+          'Alunos da tibble não encontrados por nome no Moodle:\n\n',
+          msg,
+          '\n'
+        )
+      )
+    }
 
-    # Se houver nomes sobrando, emitir erro e sair
-    if (nrow(df_incluidos) + nrow(df_excluidos) > 0) {
-      msg <- 'Problema com a lista de alunos. Verifique e conserte.\n'
-      if (nrow(df_incluidos) > 0) {
-        msg <- paste(
+    # Todos do moodle estão na tibble? Senão, erro
+    sem_tibble <- df_moodle %>%
+      dplyr::filter(!(moodle_id %in% df_atual$moodle_id))
+    if (nrow(sem_tibble) > 0) {
+      msg <- sem_tibble%>% dplyr::pull(nome) %>% paste0(collapse = '\n')
+      stop(
+        paste0(
+          'Alunos do Moodle não encontrados na tibble:\n\n',
           msg,
-          '* Alunos só na tibble:\n',
-          paste(df_incluidos %>% pull(nome), collapse = '\n')
+          '\n'
         )
-      }
-      if (nrow(df_excluidos) > 0) {
-        msg <- paste(
-          msg,
-          '* Alunos só no Moodle:\n',
-          paste(df_excluidos %>% pull(nome), collapse = '\n')
-        )
-      }
-      msg <- paste0(msg, '\n')
-      stop(msg)
+      )
     }
 
   }
 
-  # Tudo certo com a coluna do join (nome ou moodle_id)
-  # Retornar nova tibble
-  df_antes %>%
-    dplyr::left_join(df_depois, by = coluna) %>%
-    dplyr::arrange(nome)
+  # Usar o email do moodle em vez do iduff
+  df_atual %>%
+    dplyr::rename(email = email.y) %>%
+    dplyr::select(-email.x)
 
 }

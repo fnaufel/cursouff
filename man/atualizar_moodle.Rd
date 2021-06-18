@@ -25,7 +25,8 @@ atribuídas dos alunos no Moodle.
 \item Ignora o email do iduff em favor do email do Moodle. Isto porque os
 alunos costumam alterar seus emails no Moodle, enquanto o iduff costuma
 ter os emails de quando os alunos eram calouros.
-\item Se a tibble já tem o campo \code{moodle_id}, usa como chave do join.
+\item Se a tibble já tem o campo \code{moodle_id}, usa este campo como chave do join
+para os registros onde ele não é NA.
 \item Senão, usa o campo \code{nome} como chave do join e emite aviso a respeito.
 Se houver aluno com nome em só uma das fontes (tibble ou arquivo Moodle),
 emite erro e cancela a operação.
