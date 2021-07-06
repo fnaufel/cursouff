@@ -116,7 +116,7 @@ atualizar_moodle <- function(df_antes, arquivo) {
     dplyr::select(-tidyselect::ends_with('.x')) %>%
     dplyr::rename_with(
       .fn = function(x) {stringr::str_sub(x, end = -3)},
-      .cols = tidyselect::ends_with()
+      .cols = tidyselect::ends_with('.y')
     )
 
 }
