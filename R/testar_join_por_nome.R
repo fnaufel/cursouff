@@ -17,14 +17,14 @@ testar_join_por_nome <- function(df1, df2) {
     if (nrow(sobra_moodle) > 0) {
       msg <- paste0(
         msg,
-        '\n\n* Alunos só na tibble:\n\n',
+        '\n\n* Alunos só no Moodle:\n\n',
         paste0(sobra_moodle %>% dplyr::pull(nome), collapse = '\n')
       )
     }
     if (nrow(sobra_tibble) > 0) {
       msg <- paste0(
         msg,
-        '\n\n* Alunos só no Moodle:\n\n',
+        '\n\n* Alunos só na tibble:\n\n',
         paste0(sobra_tibble %>% dplyr::pull(nome), collapse = '\n')
       )
     }
