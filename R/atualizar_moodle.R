@@ -1,7 +1,7 @@
 #' @title Atualiza tibble de alunos a partir de novo arquivo do Moodle
 #'
 #' @description Deve ser chamada para incluir na tibble as notas que foram
-#'   atribuídas dos alunos no Moodle.
+#'   atribuídas aos alunos no Moodle.
 #'
 #' @param df_antes Tibble com dados dos alunos.
 #' @param arquivo Caminho do arquivo Excel exportado pelo Moodle via
@@ -23,6 +23,8 @@
 #' @author fnaufel
 #' @export
 #' @importFrom dplyr left_join arrange filter select bind_rows pull rename
+#' @importFrom tidyselect ends_with
+#' @importFrom stringr str_sub
 atualizar_moodle <- function(df_antes, arquivo) {
 
   df_moodle <- ler_moodle(arquivo)
@@ -105,9 +107,16 @@ atualizar_moodle <- function(df_antes, arquivo) {
 
   }
 
-  # Usar o email do moodle em vez do iduff
   df_atual %>%
+    # Usar o email do moodle em vez do iduff
     dplyr::rename(email = email.y) %>%
-    dplyr::select(-email.x)
+    dplyr::select(-email.x) %>%
+    # De todas as colunas restantes que existirem na tibble e no moodle,
+    # considerar as do moodle (todas as notas, id etc.)
+    dplyr::select(-tidyselect::ends_with('.x')) %>%
+    dplyr::rename_with(
+      .fn = function(x) {stringr::str_sub(x, end = -3)},
+      .cols = tidyselect::ends_with()
+    )
 
 }

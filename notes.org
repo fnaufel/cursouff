@@ -1,5 +1,26 @@
 
-* [2/2] Tasks
+* [2/5] Tasks
+
+*** TODO Use rselenium to download xls from iduff
+    :LOGBOOK:
+    - State "TODO"       from              [2021-06-14 Mon 16:03]
+    :END:
+
+*** TODO Emacs: function to rename file
+    :LOGBOOK:
+    - State "TODO"       from              [2021-06-14 Mon 16:03]
+    :END:
+
+    + insert date at the beginning of name
+
+*** STARTED Change atualizar_moodle
+    :LOGBOOK:
+    - State "STARTED"    from "DONE"       [2021-07-06 Tue 13:22]
+    - State "DONE"       from "TODO"       [2021-06-18 Fri 16:49]
+    - State "TODO"       from              [2021-06-14 Mon 16:11]
+    :END:
+
+    + Get notas columns from moodle to replace notas columns in tibble
 
 *** DONE Mudar ler_iduff e atualizar_iduff
     CLOSED: [2021-06-02 Wed 19:31]

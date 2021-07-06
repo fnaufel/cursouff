@@ -18,7 +18,7 @@ Se houve conflitos, termina com erro.
 }
 \description{
 Deve ser chamada para incluir na tibble as notas que foram
-atribuídas dos alunos no Moodle.
+atribuídas aos alunos no Moodle.
 }
 \details{
 \itemize{

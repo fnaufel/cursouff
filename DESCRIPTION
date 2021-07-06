@@ -11,4 +11,4 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 URL: https://github.com/fnaufel/cursouff
 BugReports: https://github.com/fnaufel/cursouff/issues
-Imports: dplyr, janitor, readxl, stringr, magrittr
+Imports: dplyr, janitor, readxl, stringr, tidyselect
