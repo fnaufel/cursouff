@@ -53,15 +53,15 @@ ler_moodle <- function(arquivo) {
 #' @param nome Nome da coluna (vetorizado).
 #'
 #' @return Nome(s) da(s) coluna(s) alterado(s).
-#'   * `assignment_` ➜ `nota_`
-#'   * `course_total` ➜ `nota_final`
-#'   * O sufixo `_real`, se estiver presente, é removido
 #'
 #' @importFrom stringr str_replace str_remove
 mudar_nomes <- function(nome) {
 
   nome %>%
     stringr::str_replace('^assignment_', 'nota_') %>%
+    stringr::str_replace('^workshop_', 'nota_') %>%
+    stringr::str_replace('_submission', '_s') %>%
+    stringr::str_replace('_assessment', '_a') %>%
     stringr::str_replace('^course_total', 'nota_final') %>%
     stringr::str_remove('_real$')
 

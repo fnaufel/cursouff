@@ -11,11 +11,6 @@ mudar_nomes(nome)
 }
 \value{
 Nome(s) da(s) coluna(s) alterado(s).
-\itemize{
-\item \code{assignment_} ➜ \code{nota_}
-\item \code{course_total} ➜ \code{nota_final}
-\item O sufixo \verb{_real}, se estiver presente, é removido
-}
 }
 \description{
 Mudar nomes das colunas onde o moodle põe as notas
