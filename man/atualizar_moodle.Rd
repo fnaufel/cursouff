@@ -4,13 +4,17 @@
 \alias{atualizar_moodle}
 \title{Atualiza tibble de alunos a partir de novo arquivo do Moodle}
 \usage{
-atualizar_moodle(df_antes, arquivo)
+atualizar_moodle(df_antes, arquivo, nomes_notas = NULL)
 }
 \arguments{
 \item{df_antes}{Tibble com dados dos alunos.}
 
 \item{arquivo}{Caminho do arquivo Excel exportado pelo Moodle via
 \verb{Grades > Export: Excel spreadsheet}.}
+
+\item{nomes_notas}{Vetor nomeado. Os índices são os nomes das
+atividades no Moodle (modificados). Os valores são strings com
+os nomes que desejamos que apareçam na tibble.}
 }
 \value{
 Se não houve conflitos no join, retorna a tibble atualizada.

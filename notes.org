@@ -1,5 +1,19 @@
 
-* [3/4] Tasks
+* [3/6] Tasks
+
+*** TODO Change atualizar_moodle
+    :LOGBOOK:
+    - State "TODO"       from              [2021-07-19 Mon 18:37]
+    :END:
+
+    + [ ] Pass df with shorter names of activities
+
+    + [ ] Rename columns accordingly
+
+*** TODO Write function to shorten student's names
+    :LOGBOOK:
+    - State "TODO"       from              [2021-07-19 Mon 18:37]
+    :END:
 
 *** TODO Use rselenium to download xls from iduff
     :LOGBOOK:

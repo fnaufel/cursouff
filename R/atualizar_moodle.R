@@ -6,6 +6,9 @@
 #' @param df_antes Tibble com dados dos alunos.
 #' @param arquivo Caminho do arquivo Excel exportado pelo Moodle via
 #'   `Grades > Export: Excel spreadsheet`.
+#' @param nomes_notas Vetor nomeado. Os índices são os nomes das
+#'   atividades no Moodle (modificados). Os valores são strings com
+#'   os nomes que desejamos que apareçam na tibble.
 #'
 #' @return Se não houve conflitos no join, retorna a tibble atualizada.
 #'   Se houve conflitos, termina com erro.
@@ -23,9 +26,9 @@
 #' @author fnaufel
 #' @export
 #' @importFrom dplyr left_join arrange filter select bind_rows pull rename
-#' @importFrom tidyselect ends_with
+#' @importFrom tidyselect ends_with starts_with
 #' @importFrom stringr str_sub
-atualizar_moodle <- function(df_antes, arquivo) {
+atualizar_moodle <- function(df_antes, arquivo, nomes_notas = NULL) {
 
   df_moodle <- ler_moodle(arquivo)
 
@@ -107,7 +110,7 @@ atualizar_moodle <- function(df_antes, arquivo) {
 
   }
 
-  df_atual %>%
+  df <- df_atual %>%
     # Usar o email do moodle em vez do iduff
     dplyr::rename(email = email.y) %>%
     dplyr::select(-email.x) %>%
@@ -118,5 +121,22 @@ atualizar_moodle <- function(df_antes, arquivo) {
       .fn = function(x) {stringr::str_sub(x, end = -3)},
       .cols = tidyselect::ends_with('.y')
     )
+
+  # Renomear as colunas das notas, se desejado
+  if (!is.null(nomes_notas)) {
+    df <- df %>%
+      dplyr::rename_with(
+        .fn = function(x) {
+          ifelse(
+            x %in% names(nomes_notas),
+            nomes_notas[x],
+            x
+          )
+        },
+        .cols = tidyselect::starts_with('nota_')
+      )
+  }
+
+  df
 
 }
