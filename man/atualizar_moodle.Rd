@@ -23,6 +23,13 @@ Se houve conflitos, termina com erro.
 \description{
 Deve ser chamada para incluir na tibble as notas que foram
 atribuídas aos alunos no Moodle.
+
+ATENÇÃO: AS NOTAS CONSIDERADAS SÃO SEMPRE AS DO MOODLE.
+
+Alterações nas notas em \code{df_antes} serão descartadas.
+
+Se, no resultado, estiver faltando algum aluno do Moodle,
+emitir mensagem de erro e abortar.
 }
 \details{
 \itemize{

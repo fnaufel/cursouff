@@ -1,23 +1,99 @@
 
-* [3/6] Tasks
-
-*** TODO Change atualizar_moodle
-    :LOGBOOK:
-    - State "TODO"       from              [2021-07-19 Mon 18:37]
-    :END:
-
-    + [ ] Pass df with shorter names of activities
-
-    + [ ] Rename columns accordingly
-
-*** TODO Write function to shorten student's names
-    :LOGBOOK:
-    - State "TODO"       from              [2021-07-19 Mon 18:37]
-    :END:
+* [6/7] Tasks
 
 *** TODO Use rselenium to download xls from iduff
     :LOGBOOK:
     - State "TODO"       from              [2021-06-14 Mon 16:03]
+    :END:
+
+*** DONE Fix atualizar moodle
+    CLOSED: [2021-08-27 Fri 16:03]
+    :LOGBOOK:
+    - State "DONE"       from "STARTED"    [2021-08-27 Fri 16:03]
+    - State "STARTED"    from "TODO"       [2021-08-27 Fri 12:46]
+    - State "TODO"       from              [2021-08-25 Wed 18:41]
+    :END:
+    
+***** Dfs
+
+******* turma
+
+        + matricula
+
+        + cpf
+
+        + nome
+
+        + email
+
+        + disciplina
+
+        + codigo
+
+        + turma
+
+        + ano
+
+        + semestre
+        
+******* moodle xls file > after ler_moodle
+
+        |----------------------------------+------------|
+        | id                               | moodle_id  |
+        | First name                       | nome       |
+        | Surname                          | nome       |
+        | ID number                        |            |
+        | Institution                      |            |
+        | Department                       |            |
+        | Email address                    | email      |
+        | Grade 1                          | nota_      |
+        | ...                              | ...        |
+        | Grade n                          | nota_      |
+        | Course total (Real)              | nota_final |
+        | Last downloaded from this course |            |
+        |----------------------------------+------------|
+        
+******* How to join them
+
+        + Remove all columns with grades
+
+        + if df_antes does not have moodle_id column, call function to
+          join by nome. If join not successful, abort with error
+
+        + else
+
+          - split df_antes into two: with moodle_id, without moodle_id
+
+          - call function to join by id with the first df
+
+          - call function to join by nome with the second df
+
+          - rbind results
+
+          - change column names of grades
+        
+***** Ideas
+
+      + Discard notas already in tibble
+   
+      + Use Intersection of names?
+
+*** DONE Change atualizar_moodle
+    CLOSED: [2021-07-20 Tue 19:22]
+    :LOGBOOK:
+    - State "DONE"       from "TODO"       [2021-07-20 Tue 19:22]
+    - State "TODO"       from              [2021-07-19 Mon 18:37]
+    :END:
+
+    + [X] Pass df with shorter names of activities
+
+    + [X] Rename columns accordingly
+
+*** DONE Write function to shorten student's names
+    CLOSED: [2021-07-20 Tue 19:22]
+    :LOGBOOK:
+    - State "DONE"       from "TODO"       [2021-07-20 Tue 19:22]
+    - State "TODO"       from              [2021-07-19 Mon 18:37]
     :END:
 
 *** DONE Change atualizar_moodle
