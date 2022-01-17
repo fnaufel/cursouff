@@ -129,8 +129,7 @@ atualizar_moodle <- function(df_antes, arquivo, nomes_notas = NULL) {
             nomes_notas[x],
             x
           )
-        },
-        .cols = tidyselect::starts_with('nota_')
+        }
       )
   }
 
