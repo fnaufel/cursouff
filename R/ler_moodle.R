@@ -60,6 +60,7 @@ mudar_nomes <- function(nome) {
   nome %>%
     stringr::str_replace('^assignment_', 'nota_') %>%
     stringr::str_replace('^workshop_', 'nota_') %>%
+    stringr::str_replace('^quiz_', 'nota_') %>%
     stringr::str_replace('_submission', '_s') %>%
     stringr::str_replace('_assessment', '_a') %>%
     stringr::str_replace('^course_total', 'nota_final') %>%
