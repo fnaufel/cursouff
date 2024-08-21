@@ -43,7 +43,7 @@ calcular_metas <-  function(
   #
   meta <- referencias %>%
     purrr::map_dfc(
-      ~ pmax(ceiling((. - acumulado) / peso_restante), 0)
+      ~ round(pmax((. - acumulado) / peso_restante, 0), 2)
     ) %>%
     dplyr::mutate(
       dplyr::across(dplyr::everything(), ~ifelse(. > 100, NA, .))

@@ -3,8 +3,6 @@
 #' @description Inclui na tibble os alunos do novo arquivo que não estavam na
 #'   tibble e remove da tibble os alunos que não aparecem no novo arquivo.
 #'
-#' @details
-#'
 #' @param df_antes Tibble com a turma original (com campos do iduff, pelo
 #'   menos; talvez com os campos do moodle também).
 #'

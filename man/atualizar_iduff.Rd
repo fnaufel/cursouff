@@ -24,9 +24,6 @@ Lista com 3 tibbles:
 Inclui na tibble os alunos do novo arquivo que não estavam na
 tibble e remove da tibble os alunos que não aparecem no novo arquivo.
 }
-\details{
-
-}
 \author{
 fnaufel
 }
