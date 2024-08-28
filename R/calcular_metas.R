@@ -20,7 +20,7 @@ calcular_metas <-  function(
   nomes_notas,
   pesos_notas,
   peso_restante = 1 - sum(pesos_notas),
-  referencias = c('VS' = 40, 'AP' = 60)
+  referencias = c('VS' = 4, 'AP' = 6)
 ) {
 
 

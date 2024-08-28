@@ -8,7 +8,7 @@ tab_notas(
   df,
   legenda = NULL,
   incl_matr = FALSE,
-  incl_nome = TRUE,
+  incl_nome = !incl_matr,
   ordem = ifelse(incl_nome, "nome", "matricula")
 )
 }
