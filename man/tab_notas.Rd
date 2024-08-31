@@ -7,8 +7,8 @@
 tab_notas(
   df,
   legenda = NULL,
-  incl_matr = FALSE,
-  incl_nome = !incl_matr,
+  incl_nome = TRUE,
+  incl_matr = !incl_nome,
   ordem = ifelse(incl_nome, "nome", "matricula")
 )
 }
@@ -17,9 +17,9 @@ tab_notas(
 
 \item{legenda}{Vetor de strings para incluir no rodapé da tabela, Default: NULL}
 
-\item{incl_matr}{Boolean: incluir números de matrícula?, Default: FALSE}
+\item{incl_nome}{Boolean: incluir nomes dos alunos?}
 
-\item{incl_nome}{Boolean: incluir nomes dos alunos, Default: TRUE}
+\item{incl_matr}{Boolean: incluir números de matrícula?}
 
 \item{ordem}{Coluna para ordenar, Default: ifelse(incl_nome, "nome", "matricula")}
 }
