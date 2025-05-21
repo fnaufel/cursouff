@@ -15,7 +15,8 @@
 #'
 #' @author fnaufel
 #' @export
-#' @importFrom dplyr anti_join arrange mutate rows_insert rows_delete
+#' @importFrom dplyr anti_join arrange mutate rows_insert rows_delete left_join
+#' @importFrom rlang is_empty
 atualizar_iduff <- function(df_antes, arquivo) {
 
   if (! 'matricula' %in% names(df_antes))
@@ -44,7 +45,24 @@ atualizar_iduff <- function(df_antes, arquivo) {
     dplyr::rows_delete(df_excluidos, by = coluna)
   }
 
+  # Agora, acrescentar colunas que existam em df_depois mas não em df_antes.
+  # Aqui, só as linhas de df_antes. Linhas novas de df_depois são inseridas
+  # no próximo passo.
+  novas_colunas <- setdiff(names(df_depois), names(df_antes))
+  if (!rlang::is_empty(novas_colunas)) {
+
+    df_novas_colunas <- df_depois %>%
+      dplyr::select(dplyr::all_of(c(coluna, novas_colunas)))
+
+    df_antes <- df_antes %>%
+      dplyr::left_join(
+        df_novas_colunas,
+        by = coluna
+      )
+  }
+
   # Importante: alunos já presentes na tibble não têm nenhum campo alterado
+  # (a não ser possíveis novas colunas adicionadas no passo anterior).
   df <- df_antes %>%
     # Inserir linhas novas
     dplyr::rows_insert(df_incluidos, by = coluna) %>%
